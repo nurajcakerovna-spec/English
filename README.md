@@ -1,1 +1,442 @@
-# English
+# index.html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Hub — Учим английский</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6fb;
+    color: #222;
+    line-height: 1.6;
+  }
+  header {
+    background: linear-gradient(135deg, #4a6cf7, #6a3ef7);
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  header h1 { font-size: 2.2em; margin-bottom: 8px; }
+  header p { opacity: 0.9; }
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    background: white;
+    padding: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  nav button {
+    background: #eef1fa;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: #4a6cf7;
+    transition: 0.2s;
+  }
+  nav button:hover, nav button.active {
+    background: #4a6cf7;
+    color: white;
+  }
+  main { max-width: 900px; margin: 30px auto; padding: 0 16px; }
+  section { display: none; animation: fade 0.3s; }
+  section.active { display: block; }
+  @keyframes fade { from {opacity:0; transform:translateY(6px);} to {opacity:1;} }
+
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  h2 { color: #4a6cf7; margin-bottom: 14px; }
+  h3 { margin: 16px 0 8px; color: #333; }
+  .rule {
+    border-left: 4px solid #6a3ef7;
+    padding: 10px 16px;
+    background: #f8f6ff;
+    margin: 10px 0;
+    border-radius: 6px;
+  }
+  .rule .en { font-weight: 600; color: #6a3ef7; }
+  .rule .ru { color: #555; font-size: 0.95em; }
+  .example { color: #2a7a2a; font-style: italic; }
+
+  .level-tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .level-tabs button {
+    padding: 8px 16px; border-radius: 6px; border: 1px solid #4a6cf7;
+    background: white; color: #4a6cf7; cursor: pointer; font-weight: 600;
+  }
+  .level-tabs button.active { background: #4a6cf7; color: white; }
+  .reading-text { white-space: pre-line; margin: 12px 0; }
+  .translation { display: none; margin-top: 10px; padding: 12px; background: #f0f7ff; border-radius: 8px; }
+  .translation.show { display: block; }
+  .btn {
+    background: #4a6cf7; color: white; border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: 8px;
+  }
+  .btn:hover { background: #3a5cd7; }
+  .btn.secondary { background: #6a3ef7; }
+  .btn.secondary:hover { background: #5a2ee7; }
+
+  .video-list { display: grid; gap: 14px; }
+  .video-item {
+    display: flex; gap: 12px; align-items: center;
+    padding: 12px; border: 1px solid #e3e7f5; border-radius: 10px;
+  }
+  .video-item .thumb {
+    width: 60px; height: 60px; border-radius: 8px;
+    background: linear-gradient(135deg, #4a6cf7, #6a3ef7);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 24px; flex-shrink: 0;
+  }
+  .video-item a { color: #4a6cf7; text-decoration: none; font-weight: 600; }
+  .video-item a:hover { text-decoration: underline; }
+  .video-item p { font-size: 0.9em; color: #666; }
+
+  .pronounce-box { text-align: center; }
+  #word-input {
+    width: 100%; max-width: 400px; padding: 14px; font-size: 18px;
+    border: 2px solid #d0d7ee; border-radius: 10px; text-align: center;
+    outline: none; transition: 0.2s;
+  }
+  #word-input:focus { border-color: #4a6cf7; }
+  .pronounce-controls { margin-top: 16px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  #result { margin-top: 18px; font-size: 1.1em; font-weight: 600; }
+  #score-bar {
+    height: 14px; background: #e3e7f5; border-radius: 8px; overflow: hidden;
+    margin: 12px auto; max-width: 400px;
+  }
+  #score-fill { height: 100%; width: 0%; background: #2a7a2a; transition: width 0.4s; }
+  .examples-words { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 14px; }
+  .examples-words span {
+    background: #eef1fa; padding: 6px 12px; border-radius: 20px;
+    cursor: pointer; font-size: 0.9em; color: #4a6cf7;
+  }
+  .examples-words span:hover { background: #dbe1fa; }
+  .hint { color: #888; font-size: 0.9em; text-align: center; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🇬🇧 English Hub</h1>
+  <p>Грамматика • Чтение • Аудирование • Произношение</p>
+</header>
+
+<nav>
+  <button class="active" data-tab="grammar">📘 Грамматика</button>
+  <button data-tab="reading">📖 Чтение</button>
+  <button data-tab="listening">🎧 Аудирование</button>
+  <button data-tab="pronounce">🗣️ Произношение</button>
+</nav>
+
+<main>
+
+<!-- ГРАММАТИКА -->
+<section id="grammar" class="active">
+  <div class="card">
+    <h2>📘 Все основные правила грамматики</h2>
+
+    <h3>1. Времена (Tenses)</h3>
+    <div class="rule">
+      <div class="en">Present Simple: I work / He works</div>
+      <div class="ru">Простое настоящее — регулярные действия. + do/does для вопросов и отрицаний.</div>
+      <div class="example">I go to school every day. She doesn't like coffee.</div>
+    </div>
+    <div class="rule">
+      <div class="en">Present Continuous: I am working</div>
+      <div class="ru">Действие происходит сейчас. am/is/are + V-ing.</div>
+      <div class="example">They are playing football now.</div>
+    </div>
+    <div class="rule">
+      <div class="en">Past Simple: I worked / I went</div>
+      <div class="ru">Завершённое действие в прошлом. V2 (вторая форма глагола).</div>
+      <div class="example">She visited London last year.</div>
+    </div>
+    <div class="rule">
+      <div class="en">Present Perfect: I have worked</div>
+      <div class="ru">Действие завершено, но важен результат сейчас. have/has + V3.</div>
+      <div class="example">I have already finished my homework.</div>
+    </div>
+    <div class="rule">
+      <div class="en">Future Simple: I will work</div>
+      <div class="ru">Будущее действие. will + V1.</div>
+      <div class="example">We will travel to Spain next summer.</div>
+    </div>
+
+    <h3>2. Артикли (Articles)</h3>
+    <div class="rule">
+      <div class="en">a / an — неопределённый</div>
+      <div class="ru">Перед исчисляемым существительным в единственном числе, когда речь о чём-то неизвестном. "a" — перед согласным звуком, "an" — перед гласным.</div>
+      <div class="example">a book, an apple, an hour</div>
+    </div>
+    <div class="rule">
+      <div class="en">the — определённый</div>
+      <div class="ru">Когда предмет уже упоминался или единственный в своём роде.</div>
+      <div class="example">The sun, the book I bought yesterday</div>
+    </div>
+
+    <h3>3. Модальные глаголы (Modal verbs)</h3>
+    <div class="rule">
+      <div class="en">can / could / may / must / should</div>
+      <div class="ru">Выражают возможность, разрешение, обязанность, совет. Не меняются по лицам, после них — инфинитив без "to".</div>
+      <div class="example">You should rest. I can swim. He must go.</div>
+    </div>
+
+    <h3>4. Условные предложения (Conditionals)</h3>
+    <div class="rule">
+      <div class="en">0: If + Present, Present</div>
+      <div class="ru">Общие истины. <span class="example">If you heat ice, it melts.</span></div>
+    </div>
+    <div class="rule">
+      <div class="en">1st: If + Present, will + V</div>
+      <div class="ru">Реальное будущее. <span class="example">If it rains, we will stay home.</span></div>
+    </div>
+    <div class="rule">
+      <div class="en">2nd: If + Past, would + V</div>
+      <div class="ru">Нереальное настоящее. <span class="example">If I were rich, I would travel.</span></div>
+    </div>
+    <div class="rule">
+      <div class="en">3rd: If + had + V3, would have + V3</div>
+      <div class="ru">Нереальное прошлое. <span class="example">If I had studied, I would have passed.</span></div>
+    </div>
+
+    <h3>5. Пассивный залог (Passive Voice)</h3>
+    <div class="rule">
+      <div class="en">be + V3</div>
+      <div class="ru">Действие направлено на объект. <span class="example">The letter was written yesterday.</span></div>
+    </div>
+
+    <h3>6. Степени сравнения (Comparatives)</h3>
+    <div class="rule">
+      <div class="en">-er / -est или more / most</div>
+      <div class="ru">Короткие слова: big → bigger → the biggest. Длинные: beautiful → more beautiful → the most beautiful.</div>
+    </div>
+
+    <h3>7. Предлоги (Prepositions)</h3>
+    <div class="rule">
+      <div class="en">in / on / at</div>
+      <div class="ru">in — внутри, on — на поверхности, at — в точке. <span class="example">in the room, on the table, at the door</span></div>
+    </div>
+
+    <h3>8. Герундий и инфинитив</h3>
+    <div class="rule">
+      <div class="en">V-ing vs to + V</div>
+      <div class="ru">После enjoy, like, avoid → V-ing. После want, decide, hope → to + V. <span class="example">I enjoy reading. I want to go.</span></div>
+    </div>
+
+    <h3>9. Местоимения</h3>
+    <div class="rule">
+      <div class="en">I, you, he, she, it, we, they</div>
+      <div class="ru">Личные; притяжательные: my, your, his, her, its, our, their; объектные: me, you, him, her, it, us, them.</div>
+    </div>
+
+    <h3>10. Множественное число</h3>
+    <div class="rule">
+      <div class="en">-s / -es / нерегулярные</div>
+      <div class="ru">book → books, box → boxes, child → children, man → men.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ЧТЕНИЕ -->
+<section id="reading">
+  <div class="card">
+    <h2>📖 Тексты для практики чтения</h2>
+    <div class="level-tabs">
+      <button class="active" data-level="A1">A1 (Beginner)</button>
+      <button data-level="A2">A2 (Elementary)</button>
+      <button data-level="B1">B1 (Intermediate)</button>
+      <button data-level="B2">B2 (Upper-Int.)</button>
+    </div>
+
+    <div id="reading-content"></div>
+  </div>
+</section>
+
+<!-- АУДИРОВАНИЕ -->
+<section id="listening">
+  <div class="card">
+    <h2>🎧 Видео для практики Listening</h2>
+    <p>Подборка каналов по уровням. Открой в новой вкладке и слушай с субтитрами.</p>
+    <div class="video-list" id="video-list"></div>
+    <p class="hint">💡 Совет: слушай один и тот же отрывок 3 раза: 1) без субтитров, 2) с субтитрами, 3) повторяя вслух.</p>
+  </div>
+</section>
+
+<!-- ПРОИЗНОШЕНИЕ -->
+<section id="pronounce">
+  <div class="card pronounce-box">
+    <h2>🗣️ Проверка произношения</h2>
+    <p>Введи слово или фразу, нажми «Слушать» (эталон), затем «Проверить» и произнеси.</p>
+
+    <div style="margin: 18px 0;">
+      <input type="text" id="word-input" value="Hello, how are you?" placeholder="Введи слово...">
+    </div>
+
+    <div class="pronounce-controls">
+      <button class="btn" id="listen-btn">🔊 Слушать эталон</button>
+      <button class="btn secondary" id="check-btn">🎤 Проверить произношение</button>
+    </div>
+
+    <div id="score-bar"><div id="score-fill"></div></div>
+    <div id="result"></div>
+
+    <div class="examples-words">
+      <span>Hello</span>
+      <span>Thank you</span>
+      <span>Beautiful</span>
+      <span>Good morning</span>
+      <span>I love English</span>
+      <span>How are you?</span>
+    </div>
+    <p class="hint">Работает в Chrome / Edge. Разреши доступ к микрофону.</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+/* ---------- НАВИГАЦИЯ ---------- */
+const navBtns = document.querySelectorAll('nav button');
+navBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    navBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('main section').forEach(s => s.classList.remove('active'));
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ---------- ТЕКСТЫ ДЛЯ ЧТЕНИЯ ---------- */
+const readings = {
+  A1: {
+    title: "My Day",
+    text: `Hello! My name is Anna. I am a student. Every morning I wake up at seven o'clock. I eat breakfast and drink tea. Then I go to school by bus. I have five lessons. After school, I do my homework and play with my cat. In the evening, I watch TV with my family. I go to bed at ten o'clock.`,
+    translation: `Привет! Меня зовут Анна. Я студентка. Каждое утро я просыпаюсь в семь часов. Я завтракаю и пью чай. Затем я еду в школу на автобусе. У меня пять уроков. После школы я делаю домашнюю работу и играю со своей кошкой. Вечером я смотрю телевизор с семьёй. Я ложусь спать в десять часов.`,
+    questions: ["What is Anna's name?", "What time does she wake up?", "How does she go to school?"]
+  },
+  A2: {
+    title: "A Trip to the Mountains",
+    text: `Last summer, my friends and I decided to go to the mountains. We packed our backpacks with food, water, and warm clothes. The journey took three hours by train. When we arrived, the weather was sunny and warm. We walked along a beautiful path and saw many birds and flowers. In the evening, we made a fire and cooked dinner. It was an amazing experience that I will never forget.`,
+    translation: `Прошлым летом мы с друзьями решили поехать в горы. Мы собрали рюкзаки с едой, водой и тёплой одеждой. Поездка заняла три часа на поезде. Когда мы приехали, погода была солнечной и тёплой. Мы шли по красивой тропе и видели много птиц и цветов. Вечером мы развели костёр и приготовили ужин. Это был удивительный опыт, который я никогда не забуду.`,
+    questions: ["Where did they go last summer?", "How long was the journey?", "What did they do in the evening?"]
+  },
+  B1: {
+    title: "The Importance of Learning Languages",
+    text: `Learning a foreign language is one of the most rewarding experiences a person can have. It opens doors to new cultures, new friendships, and new career opportunities. Research shows that bilingual people have better memory and problem-solving skills. However, learning a language requires patience and daily practice. Reading books, watching films, and speaking with native speakers are all effective methods. The key is not to be afraid of making mistakes, because every mistake is a step towards fluency.`,
+    translation: `Изучение иностранного языка — один из самых ценных опытов в жизни человека. Оно открывает двери к новым культурам, новым друзьям и новым карьерным возможностям. Исследования показывают, что у двуязычных людей лучше память и навыки решения задач. Однако изучение языка требует терпения и ежедневной практики. Чтение книг, просмотр фильмов и общение с носителями — всё это эффективные методы. Главное — не бояться ошибок, потому что каждая ошибка — шаг к свободному владению.`,
+    questions: ["What does learning a language open doors to?", "What do studies say about bilingual people?", "What is the key to success according to the text?"]
+  },
+  B2: {
+    title: "The Future of Artificial Intelligence",
+    text: `Artificial intelligence is rapidly transforming the way we live and work. From self-driving cars to medical diagnostics, AI systems are already outperforming humans in many specialized tasks. While some people fear that AI will replace millions of jobs, others argue that it will create entirely new professions and boost productivity. The truth likely lies somewhere in between. What is certain is that societies will need to adapt: education systems must focus on creativity, critical thinking, and emotional intelligence — skills that machines cannot easily replicate. The coming decades will be defined not by whether we use AI, but by how wisely we choose to do so.`,
+    translation: `Искусственный интеллект стремительно меняет то, как мы живём и работаем. От беспилотных автомобилей до медицинской диагностики — системы ИИ уже превосходят людей во многих специализированных задачах. Пока одни боятся, что ИИ заменит миллионы рабочих мест, другие утверждают, что он создаст совершенно новые профессии и повысит производительность. Истина, скорее всего, где-то посередине. Определённо одно: обществам придётся адаптироваться — системы образования должны сосредоточиться на креативности, критическом мышлении и эмоциональном интеллекте, навыках, которые машины не могут легко воспроизвести. Грядущие десятилетия будут определяться не тем, используем ли мы ИИ, а тем, насколько мудро мы это делаем.`,
+    questions: ["What examples of AI are mentioned?", "What skills does the author say education should focus on?", "What will define the coming decades?"]
+  }
+};
+
+let currentLevel = 'A1';
+
+function renderReading(level) {
+  const data = readings[level];
+  const container = document.getElementById('reading-content');
+  container.innerHTML = `
+    <h3>${data.title} <small style="color:#888;">(${level})</small></h3>
+    <div class="reading-text">${data.text}</div>
+    <button class="btn" onclick="toggleTranslation()">Показать перевод</button>
+    <div class="translation" id="translation">${data.translation}</div>
+    <h3 style="margin-top:20px;">Вопросы для самопроверки:</h3>
+    <ol style="margin-left: 20px;">
+      ${data.questions.map(q => `<li>${q}</li>`).join('')}
+    </ol>
+  `;
+}
+
+function toggleTranslation() {
+  document.getElementById('translation').classList.toggle('show');
+}
+
+document.querySelectorAll('.level-tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.level-tabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentLevel = btn.dataset.level;
+    renderReading(currentLevel);
+  });
+});
+renderReading('A1');
+
+/* ---------- ВИДЕО ---------- */
+const videos = [
+  { level: 'A1', title: 'BBC Learning English — Beginner', desc: 'Простые диалоги и базовые фразы', url: 'https://www.youtube.com/@bbclearningenglish' },
+  { level: 'A2', title: 'Easy English', desc: 'Разговоры на улице с субтитрами', url: 'https://www.youtube.com/@EasyEnglishVideos' },
+  { level: 'B1', title: 'English with Lucy', desc: 'Грамматика и произношение', url: 'https://www.youtube.com/@EnglishwithLucy' },
+  { level: 'B1', title: 'TED-Ed', desc: 'Короткие познавательные видео', url: 'https://www.youtube.com/@TEDEd' },
+  { level: 'B2', title: 'TED Talks', desc: 'Лекции на разные темы', url: 'https://www.youtube.com/@TED' },
+  { level: 'B2', title: 'BBC News', desc: 'Новости на английском', url: 'https://www.youtube.com/@BBCNews' },
+  { level: 'Все', title: 'Learn English with TV Series', desc: 'Английский по сериалам', url: 'https://www.youtube.com/@LearnEnglishWithTVSeries' }
+];
+
+document.getElementById('video-list').innerHTML = videos.map(v => `
+  <div class="video-item">
+    <div class="thumb">▶</div>
+    <div>
+      <a href="${v.url}" target="_blank">[${v.level}] ${v.title}</a>
+      <p>${v.desc}</p>
+    </div>
+  </div>
+`).join('');
+
+/* ---------- ПРОИЗНОШЕНИЕ ---------- */
+const input = document.getElementById('word-input');
+const result = document.getElementById('result');
+const scoreFill = document.getElementById('score-fill');
+
+document.getElementById('listen-btn').addEventListener('click', () => {
+  const text = input.value.trim();
+  if (!text) return;
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.9;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utter);
+});
+
+document.getElementById('check-btn').addEventListener('click', () => {
+  const target = input.value.trim().toLowerCase();
+  if (!target) { result.textContent = 'Введи слово или фразу.'; return; }
+
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    result.textContent = '❌ Твой браузер не поддерживает распознавание речи. Используй Chrome или Edge.';
+    return;
+  }
+
+  const rec = new SR();
+  rec.lang = 'en-US';
+  rec.interimResults = false;
+  rec.maxAlternatives = 1;
+
+  result.textContent = '🎤 Говори...';
+  scoreFill.style.width = '0%';
+
+  rec.onresult = (e) => {
+    const said = e.results[0][0].transcript.toLowerCase();
+    const score = similarity(target, said);
+    scoreFill.style.width = score + '%';
+    scoreFill.style.background = score > 75 ? '#2a7a2a' : score > 45 ? '#e0a800' : '#c0392b';
+
+    if (score > 85) result.
